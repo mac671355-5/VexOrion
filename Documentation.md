@@ -9,7 +9,8 @@ Orion is a modern, high-performance UI library for Roblox with integrated Lucide
 To use the library, load it into your script:
 
 ```lua
-local Library = loadstring(readfile("Orion.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/mac671355-5/VexOrion/refs/heads/main/Orion.lua"))() 
+
 ```
 
 ## 🪟 Creating a Window
