@@ -1,166 +1,109 @@
-# 🌌 Modern Orion UI Library
+# 🌌 Orion Library Documentation
 
-A premium, modernized version of the Orion UI library featuring a sleek **Better EH** purple theme, dynamic **Lucide icons**, and a built-in **Config System**.
+Orion is a modern, high-performance UI library for Roblox with integrated Lucide icons, a robust configuration system, and a flexible theme engine.
 
-## 🚀 Quick Start
+---
+
+## 🚀 Getting Started
+
+To use the library, load it into your script:
 
 ```lua
-local OrionLib = loadstring(game:HttpGet("YOUR_LINK_HERE"))()
+local Library = loadstring(readfile("Orion.lua"))()
+```
 
-local Window = OrionLib:MakeWindow({
-    Name = "Better EH",
+## 🪟 Creating a Window
+
+The window is the main container for your UI.
+
+```lua
+local Window = Library:MakeWindow({
+    Name = "My Script",
     HidePremium = false,
     SaveConfig = true,
-    ConfigFolder = "OrionTest",
-    Icon = "car-front", -- Lucide icon name
-    ShowIcon = true
+    ConfigFolder = "OrionProject",
+    IntroEnabled = true,
+    Theme = "WinUI", -- Choose from available themes
+    ShowIcon = true,
+    Icon = "home"
 })
+```
 
--- The window is automatically themed and includes a Config button in the top bar!
+### 🎨 Theme System
+Orion now supports dynamic themes. You can set them at startup or change them live.
+
+**Available Themes:**
+- `Default`: The classic Orion look.
+- `Dark`: A deep dark mode with grey accents.
+- `Light`: A clean, readable light mode.
+- `WinUI`: A modern, Windows 11-inspired grey layout.
+- `Grape`: Purple-themed accents.
+- `Ocean`: Blue-themed accents.
+- `Rose`: Pink-themed accents.
+
+**Change Theme Live:**
+```lua
+Library:SetTheme("Rose")
+```
+
+**Custom Themes:**
+You can also pass a custom table to `SetTheme`:
+```lua
+Library:SetTheme({
+    Main = Color3.fromRGB(20, 20, 20),
+    Second = Color3.fromRGB(30, 30, 30),
+    Stroke = Color3.fromRGB(255, 0, 0),
+    Divider = Color3.fromRGB(40, 40, 40),
+    Text = Color3.fromRGB(255, 255, 255),
+    TextDark = Color3.fromRGB(150, 150, 150)
+})
 ```
 
 ---
 
-## 📑 Tabs & Sections
+## 📑 Tabs and Sections
 
-Tabs are the main containers for your elements. You can add sections within tabs to organize them.
-
-### Create a Tab
 ```lua
 local Tab = Window:MakeTab({
-	Name = "Main",
-	Icon = "home",
-	PremiumOnly = false
+    Name = "Home",
+    Icon = "home"
 })
-```
 
-### Create a Section
-```lua
 local Section = Tab:AddSection({
-	Name = "Vehicle Settings"
+    Name = "Main Features"
 })
 ```
 
 ---
 
-## 🔘 UI Elements
+## 🧱 UI Elements
 
-### Button
-Execute simple actions.
-```lua
-Tab:AddButton({
-	Name = "Button!",
-	Callback = function()
-      		print("Clicked!")
-  	end    
-})
-```
-
-### Toggle (Checkbox)
-Boolean switch for settings.
-```lua
-Tab:AddToggle({
-	Name = "This is a toggle",
-	Default = false,
-	Callback = function(Value)
-		print(Value)
-	end    
-})
-```
-
-### Slider
-Select numerical values with a custom increment.
-```lua
-Tab:AddSlider({
-	Name = "Walkspeed",
-	Min = 16,
-	Max = 500,
-	Default = 16,
-	Color = Color3.fromRGB(161, 133, 255),
-	Increment = 1,
-	ValueName = "Speed",
-	Callback = function(Value)
-		print(Value)
-	end    
-})
-```
-
-### Dropdown (MultiSelect Support)
-Select one or multiple options from a list.
-```lua
-Tab:AddDropdown({
-	Name = "Dropdown",
-	Default = "Option 1",
-	Options = {"Option 1", "Option 2", "Option 3"},
-	MultiSelect = true, -- Enable multiple selection
-	Callback = function(Value)
-		print(Value) -- Returns a table if MultiSelect is true
-	end    
-})
-```
-
-### Colorpicker
-Choose a custom color.
-```lua
-Tab:AddColorpicker({
-	Name = "UI Color",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(Value)
-		print(Value)
-	end	  
-})
-```
-
-### Keybind
-Bind functions to a key or mouse button.
-```lua
-Tab:AddBind({
-	Name = "Bind",
-	Default = Enum.KeyCode.E,
-	Hold = false,
-	Callback = function()
-		print("Bound Key Pressed")
-	end    
-})
-```
-
-### Textbox
-Input custom text or commands.
-```lua
-Tab:AddTextbox({
-	Name = "Textbox",
-	Default = "default box",
-	TextDisappear = true,
-	Callback = function(Value)
-		print(Value)
-	end	  
-})
-```
+| Element | Description |
+| :--- | :--- |
+| `AddToggle` | Toggle with automatic saving. |
+| `AddSlider` | Numeric slider with real-time saving. |
+| `AddButton` | Clickable action button. |
+| `AddDropdown` | Single or Multi-select dropdown menu. |
+| `AddColorpicker` | Professional color choice tool. |
+| `AddBind` | Assign functions to keyboard keys. |
+| `AddTextbox` | Inline text input. |
 
 ---
 
-## 🛠 Features
+## 💾 Configuration System
 
-### 📁 Config System
-The top-left button (icon: `file-sliders`) automatically opens the **Configs** tab. This allows users to save and load their settings easily without you having to code it!
+Orion comes with a built-in manager (access via the slider icon in the top right).
 
-### 🔔 Notifications
-Show pop-up messages to the user.
-```lua
-OrionLib:MakeNotification({
-	Name = "Title",
-	Content = "Notification Content",
-	Image = "rbxassetid://4483345998",
-	Time = 5
-})
-```
+### Features
+1. **Selection**: Switch between multiple config files.
+2. **Autoload**: Set a profile to load automatically whenever the script starts.
+3. **Save/New**: Create custom profiles for different scenarios.
 
-### 🎨 Lucide Icon Support
-Instead of `rbxassetid`, you can now use any icon name from [lucide.dev](https://lucide.dev/icons/).
-Example: `Icon = "settings"`, `Icon = "user"`, `Icon = "star"`.
+---
 
-### 🏁 Initialization
-Required at the end of your script to start the processing.
-```lua
-OrionLib:Init()
-```
+## 📱 Mobile Support
+
+The library automatically detects mobile players and:
+- Resizes the window to `480x270`.
+- Optimizes button sizes for touch screens.
+- Centers the UI on the smaller display area.
