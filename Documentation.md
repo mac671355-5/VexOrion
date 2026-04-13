@@ -1,6 +1,6 @@
-# 🌌 Orion Library Documentation
+# 🌌 Orion Library - Premium Documentation
 
-Orion is a modern, high-performance UI library for Roblox with integrated Lucide icons, a robust configuration system, and a flexible theme engine.
+Orion is a powerful, modern UI library for Roblox, enhanced with WindUI-inspired features. It offers high performance, Lucide icons, a flexible theme engine, and a robust configuration system.
 
 ---
 
@@ -9,69 +9,50 @@ Orion is a modern, high-performance UI library for Roblox with integrated Lucide
 To use the library, load it into your script:
 
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/mac671355-5/VexOrion/refs/heads/main/Orion.lua"))() 
-
+local OrionLib = loadstring(readfile("Orion.lua"))()
 ```
 
-## 🪟 Creating a Window
+---
 
-The window is the main container for your UI.
+## 🪟 Creating a Window
+The window is the core container for your interface.
 
 ```lua
-local Window = Library:MakeWindow({
+local Window = OrionLib:MakeWindow({
     Name = "My Script",
     HidePremium = false,
     SaveConfig = true,
     ConfigFolder = "OrionProject",
     IntroEnabled = true,
-    Theme = "WinUI", -- Choose from available themes
-    ShowIcon = true,
-    Icon = "home"
-})
-```
-
-### 🎨 Theme System
-Orion now supports dynamic themes. You can set them at startup or change them live.
-
-**Available Themes:**
-- `Default`: The classic Orion look.
-- `Dark`: A deep dark mode with grey accents.
-- `Light`: A clean, readable light mode.
-- `WinUI`: A modern, Windows 11-inspired grey layout.
-- `Grape`: Purple-themed accents.
-- `Ocean`: Blue-themed accents.
-- `Rose`: Pink-themed accents.
-
-**Change Theme Live:**
-```lua
-Library:SetTheme("Rose")
-```
-
-**Custom Themes:**
-You can also pass a custom table to `SetTheme`:
-```lua
-Library:SetTheme({
-    Main = Color3.fromRGB(20, 20, 20),
-    Second = Color3.fromRGB(30, 30, 30),
-    Stroke = Color3.fromRGB(255, 0, 0),
-    Divider = Color3.fromRGB(40, 40, 40),
-    Text = Color3.fromRGB(255, 255, 255),
-    TextDark = Color3.fromRGB(150, 150, 150)
+    Theme = "WinUI", -- WinUI, Dark, Light, Grape, Ocean, Rose, Default
+    Transparent = true, -- Adds a modern glass effect
+    SidebarWidth = 180, -- Customize your sidebar width
+    Resizable = true, -- Enable manual resizing
+    BackgroundImage = "rbxassetid://..." -- Add a background image
 })
 ```
 
 ---
 
-## 📑 Tabs and Sections
+## 🎨 Theme System
+Orion supports dynamic themes. You can set them at startup or change them live.
+
+**Change Theme Live:**
+```lua
+OrionLib:SetTheme("Rose")
+```
+
+---
+
+## 📑 Creating a Tab
+Tabs allow you to organize your features.
 
 ```lua
 local Tab = Window:MakeTab({
-    Name = "Home",
-    Icon = "home"
-})
-
-local Section = Tab:AddSection({
-    Name = "Main Features"
+	Name = "Home",
+	Icon = "home",
+	Color = Color3.fromRGB(161, 133, 255), -- Set a custom accent color for this tab
+	PremiumOnly = false
 })
 ```
 
@@ -79,32 +60,172 @@ local Section = Tab:AddSection({
 
 ## 🧱 UI Elements
 
-| Element | Description |
-| :--- | :--- |
-| `AddToggle` | Toggle with automatic saving. |
-| `AddSlider` | Numeric slider with real-time saving. |
-| `AddButton` | Clickable action button. |
-| `AddDropdown` | Single or Multi-select dropdown menu. |
-| `AddColorpicker` | Professional color choice tool. |
-| `AddBind` | Assign functions to keyboard keys. |
-| `AddTextbox` | Inline text input. |
+### 🏠 Labels & Paragraphs
+```lua
+Tab:AddLabel("Simple Label")
+Tab:AddParagraph("Title", "Content text goes here...")
+```
+
+### 🔘 Buttons
+```lua
+Tab:AddButton({
+	Name = "Press Me!",
+	Callback = function()
+		print("Button clicked")
+	end    
+})
+```
+
+### 🔘 Toggles
+```lua
+Tab:AddToggle({
+	Name = "Enabled",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+```
+
+### 🎚️ Sliders
+```lua
+Tab:AddSlider({
+	Name = "Sensitivity",
+	Min = 0,
+	Max = 100,
+	Default = 50,
+	Increment = 1,
+	ValueName = "units",
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+```
+
+### 🔽 Dropdowns
+```lua
+Tab:AddDropdown({
+	Name = "Select Option",
+	Default = "1",
+	Options = {"1", "2", "3"},
+	MultiSelect = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+```
+
+### 🎨 Color Picker
+```lua
+Tab:AddColorpicker({
+	Name = "Theme Color",
+	Default = Color3.fromRGB(255, 0, 0),
+	Callback = function(Value)
+		print(Value)
+	end	  
+})
+```
+
+### ⌨️ Keybinds
+```lua
+Tab:AddBind({
+	Name = "Kill Bind",
+	Default = Enum.KeyCode.E,
+	Hold = false,
+	Callback = function()
+		print("Power activated!")
+	end    
+})
+```
+
+### 📝 Textboxes
+```lua
+Tab:AddTextbox({
+	Name = "Input",
+	Default = "Default value",
+	TextDisappear = true,
+	Callback = function(Value)
+		print(Value)
+	end	  
+})
+```
 
 ---
 
-## 💾 Configuration System
+## ✨ New Layout Elements
 
-Orion comes with a built-in manager (access via the slider icon in the top right).
+### 📏 Dividers & Spacers
+Organize your elements with clean lines and spacing.
+```lua
+Tab:AddDivider()
+Tab:AddSpacer(20) -- Adds 20 pixels of empty space
+```
 
-### Features
-1. **Selection**: Switch between multiple config files.
-2. **Autoload**: Set a profile to load automatically whenever the script starts.
-3. **Save/New**: Create custom profiles for different scenarios.
+### 💻 Code Blocks
+Display code or logs with a copy-to-clipboard button.
+```lua
+Tab:AddCode("print('The code is here!')")
+```
 
 ---
 
-## 📱 Mobile Support
+## 💬 Feedback & Modals
 
-The library automatically detects mobile players and:
-- Resizes the window to `480x270`.
-- Optimizes button sizes for touch screens.
-- Centers the UI on the smaller display area.
+### 🔔 Notifications
+```lua
+OrionLib:MakeNotification({
+	Name = "System",
+	Content = "Action completed successfully!",
+	Image = "check",
+	Time = 5
+})
+```
+
+### 💬 Dialogs (Modals)
+Dialogs require user interaction and block the background.
+```lua
+OrionLib:MakeDialog({
+    Title = "Warning",
+    Content = "This will delete all data. Proceed?",
+    Buttons = {
+        {
+            Name = "Yes",
+            Callback = function() print("Deleted") end
+        },
+        {
+            Name = "No",
+            Callback = function() print("Aborted") end
+        }
+    }
+})
+```
+
+---
+
+## 💾 Saving & Configurations
+To save settings, add `Flag` and `Save` to any compatible element (Toggle, Slider, Dropdown, Bind, Colorpicker).
+
+```lua
+Tab:AddToggle({
+    Name = "Auto-Farm",
+    Default = false,
+    Flag = "AutoFarm",
+    Save = true
+})
+
+-- Access value anywhere:
+local val = OrionLib.Flags["AutoFarm"].Value
+```
+
+---
+
+# 🏁 Finalizing (REQUIRED)
+The below function must be called at the very end of your script.
+```lua
+OrionLib:Init()
+```
+
+### 🧹 Cleanup
+```lua
+OrionLib:Destroy()
+```
