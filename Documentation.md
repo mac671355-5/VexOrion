@@ -27,8 +27,7 @@ local Window = OrionLib:MakeWindow({
     Theme = "WinUI", -- WinUI, Dark, Light, Grape, Ocean, Rose, Default
     Transparent = true, -- Adds a modern glass effect
     SidebarWidth = 180, -- Customize your sidebar width
-    Resizable = true, -- Enable manual resizing
-    BackgroundImage = "rbxassetid://..." -- Add a background image
+    Resizable = true -- Enable manual resizing
 })
 ```
 
@@ -102,130 +101,51 @@ Tab:AddSlider({
 })
 ```
 
-### 🔽 Dropdowns
-```lua
-Tab:AddDropdown({
-	Name = "Select Option",
-	Default = "1",
-	Options = {"1", "2", "3"},
-	MultiSelect = false,
-	Callback = function(Value)
-		print(Value)
-	end    
-})
-```
-
-### 🎨 Color Picker
-```lua
-Tab:AddColorpicker({
-	Name = "Theme Color",
-	Default = Color3.fromRGB(255, 0, 0),
-	Callback = function(Value)
-		print(Value)
-	end	  
-})
-```
-
-### ⌨️ Keybinds
-```lua
-Tab:AddBind({
-	Name = "Kill Bind",
-	Default = Enum.KeyCode.E,
-	Hold = false,
-	Callback = function()
-		print("Power activated!")
-	end    
-})
-```
-
-### 📝 Textboxes
-```lua
-Tab:AddTextbox({
-	Name = "Input",
-	Default = "Default value",
-	TextDisappear = true,
-	Callback = function(Value)
-		print(Value)
-	end	  
-})
-```
-
 ---
 
-## ✨ New Layout Elements
+## ✨ Layout Elements
 
 ### 📏 Dividers & Spacers
-Organize your elements with clean lines and spacing.
 ```lua
 Tab:AddDivider()
-Tab:AddSpacer(20) -- Adds 20 pixels of empty space
+Tab:AddSpacer(20)
 ```
 
 ### 💻 Code Blocks
-Display code or logs with a copy-to-clipboard button.
+Display code with a copy button.
 ```lua
-Tab:AddCode("print('The code is here!')")
+Tab:AddCode("print('Hello World')")
 ```
 
 ---
 
-## 💬 Feedback & Modals
+## 💬 Feedback & System
 
 ### 🔔 Notifications
 ```lua
 OrionLib:MakeNotification({
 	Name = "System",
-	Content = "Action completed successfully!",
+	Content = "Ready!",
 	Image = "check",
 	Time = 5
 })
 ```
 
 ### 💬 Dialogs (Modals)
-Dialogs require user interaction and block the background.
 ```lua
 OrionLib:MakeDialog({
     Title = "Warning",
-    Content = "This will delete all data. Proceed?",
+    Content = "Discard changes?",
     Buttons = {
-        {
-            Name = "Yes",
-            Callback = function() print("Deleted") end
-        },
-        {
-            Name = "No",
-            Callback = function() print("Aborted") end
-        }
+        { Name = "Yes", Callback = function() end },
+        { Name = "No", Callback = function() end }
     }
 })
 ```
 
 ---
 
-## 💾 Saving & Configurations
-To save settings, add `Flag` and `Save` to any compatible element (Toggle, Slider, Dropdown, Bind, Colorpicker).
-
-```lua
-Tab:AddToggle({
-    Name = "Auto-Farm",
-    Default = false,
-    Flag = "AutoFarm",
-    Save = true
-})
-
--- Access value anywhere:
-local val = OrionLib.Flags["AutoFarm"].Value
-```
-
----
-
 # 🏁 Finalizing (REQUIRED)
-The below function must be called at the very end of your script.
 ```lua
 OrionLib:Init()
-```
-
-### 🧹 Cleanup
-```lua
-OrionLib:Destroy()
 ```
