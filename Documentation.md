@@ -9,7 +9,7 @@ Orion is a powerful, modern UI library for Roblox, enhanced with WindUI-inspired
 To use the library, load it into your script:
 
 ```lua
-local OrionLib = loadstring(readfile("Orion.lua"))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/mac671355-5/VexOrion/refs/heads/main/Orion.lua')))()
 ```
 
 ---
