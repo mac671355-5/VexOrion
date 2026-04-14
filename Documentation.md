@@ -7,7 +7,7 @@ Orion is a powerful and modern UI library for Roblox, designed to be easy to use
 To use the library, you first need to load it and initialize your window.
 
 ```lua
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/mac671355-5/VexOrion/refs/heads/main/Orion.lua')))()
 
 local Window = OrionLib:MakeWindow({
     Name = "Orion UI Library", 
