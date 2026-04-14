@@ -1,210 +1,227 @@
-# 🌌 Orion Library - Ultimate Documentation (WinUI 2.0)
+# Orion UI Library Documentation
 
-Orion is a state-of-the-art UI library for Roblox, redesigned from the ground up to follow modern design principles, including **WinUI aesthetics**, **Glassmorphism**, and a unified **Premium Dark Mode**.
-
----
+Orion is a powerful and modern UI library for Roblox, designed to be easy to use and highly customizable.
 
 ## 🚀 Getting Started
 
-### 📦 Initialization
-First, load the library into your script.
-```lua
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/mac671355-5/VexOrion/refs/heads/main/Orion.lua')))()
-```
+To use the library, you first need to load it and initialize your window.
 
-### 🪟 Creating a Window
-The window acts as the main container for your tabs and elements.
 ```lua
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
 local Window = OrionLib:MakeWindow({
-    Name = "Orion v2.0 | Dark Mode",
+    Name = "Orion UI Library", 
+    HidePremium = false, 
+    SaveConfig = true, 
+    ConfigFolder = "OrionTest",
+    IntroEnabled = true,
+    IntroText = "Welcome to Orion",
+    IntroIcon = "rbxassetid://4483345998",
+    Icon = "home",
     ShowIcon = true,
-    Icon = "shield-check", -- Use any Lucide icon name
-    Transparent = true,    -- Glassmorphism effect
-    SidebarWidth = 200,    -- Customize the left sidebar width
-    IntroEnabled = true,   -- Cool startup animation
-    IntroText = "Initializing System",
-    ConfigFolder = "OrionSettings", -- Folder for saving configs
-    SaveConfig = true      -- Enable the config system
+    Theme = "Dark"
 })
 ```
 
 ---
 
-## 📑 Tabs & Organization
+## 🎨 Themes
 
-### 🗂️ Adding a Tab
-Tabs allow you to categorize your script features.
+Orion comes with several built-in themes:
+- `Default`
+- `Dark`
+- `Light`
+- `Grape`
+- `Ocean`
+- `Rose`
+- `WinUI`
+
+You can set the theme when creating the window or change it dynamically:
+```lua
+OrionLib:SetTheme("Grape")
+```
+
+---
+
+## 📑 Tabs and Sections
+
+Tabs are the main containers for your UI elements. Sections help organize elements within a tab.
+
 ```lua
 local Tab = Window:MakeTab({
-    Name = "Visuals",
-    Icon = "eye", -- Use any Lucide icon name
-    PremiumOnly = false -- If true, locks the tab for non-sirius premium users
+	Name = "Main Tab",
+	Icon = "home",
+	PremiumOnly = false
 })
-```
 
-### 🧱 Adding a Section
-Sections help group elements within a tab.
-```lua
 local Section = Tab:AddSection({
-    Name = "Player Enhancements"
+	Name = "Features"
 })
 ```
 
 ---
 
-## 🕹️ Interactive Elements
+## 🔘 Elements
 
-### 🔘 Buttons
-Simple action triggers with hover & click animations.
+### Label
+Displays a simple line of text.
+```lua
+local Label = Tab:AddLabel("This is a label")
+Label:Set("Updated Label Text")
+```
+
+### Paragraph
+Displays a title and a longer block of text with an optional icon.
+```lua
+local Para = Tab:AddParagraph("Warning", "This is a serious warning!")
+Para:Set("New Title", "New Content")
+```
+
+### Button
+A clickable button with a callback.
 ```lua
 Tab:AddButton({
-    Name = "Destroy All Humans",
-    Icon = "zap",
-    Callback = function()
-        print("Button clicked!")
-    end
+	Name = "Click Me!",
+	Callback = function()
+		print("Button clicked!")
+	end
 })
 ```
 
-### 🏁 Checkboxes (Toggles)
-Modern square WinUI checkboxes for boolean settings.
+### Toggle
+A switch that can be on or off.
 ```lua
-Tab:AddCheckbox({
-    Name = "Enable Godmode",
-    Default = false,
-    Callback = function(Value)
-        print("Godmode:", Value)
-    end
+Tab:AddToggle({
+	Name = "God Mode",
+	Default = false,
+	Callback = function(Value)
+		print("God Mode:", Value)
+	end    
 })
 ```
 
-### 🎚️ Sliders
-Precise sliders for numerical values.
+### Slider
+A slider for selecting numeric values.
 ```lua
 Tab:AddSlider({
-    Name = "Walkspeed Offset",
-    Min = 0,
-    Max = 100,
-    Default = 16,
-    ValueName = "pps", -- Postfix for the value label
-    Callback = function(Value)
-        print("Speed:", Value)
-    end
+	Name = "WalkSpeed",
+	Min = 16,
+	Max = 100,
+	Default = 16,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Speed",
+	Callback = function(Value)
+		print(Value)
+	end    
 })
 ```
 
-### ⌨️ Keybinds
-Customizable key triggers for your functions.
+### Dropdown
+A menu for selecting from multiple options.
 ```lua
-Tab:AddKeybind({
-    Name = "Kill-Switch",
-    Default = Enum.KeyCode.F,
-    Hold = false, -- If true, triggers while holding
-    Callback = function()
-        print("Keybind triggered!")
-    end
+local Dropdown = Tab:AddDropdown({
+	Name = "Select Team",
+	Default = "Neutral",
+	Options = {"Team A", "Team B", "Neutral"},
+	Callback = function(Value)
+		print(Value)
+	end    
 })
+
+-- Update options
+Dropdown:Refresh({"New Option 1", "New Option 2"}, true)
 ```
 
-### 📝 Textboxes (Inputs)
-Allows users to enter custom text or values.
-```lua
-Tab:AddTextbox({
-    Name = "Custom Message",
-    Default = "",
-    TextDisappear = true, -- Clears after Enter is pressed
-    Callback = function(Value)
-        print("User entered:", Value)
-    end
-})
-```
-
-### 🔽 Dropdowns
-Selection menus for multiple options.
-```lua
-Tab:AddDropdown({
-    Name = "Choose Weapon",
-    Default = "Sword",
-    Options = {"Sword", "Axe", "Bow"},
-    Callback = function(Value)
-        print("Selected:", Value)
-    end
-})
-```
-
-### 🎨 Colorpickers
-Full RGB/HSV color selection menu.
+### Colorpicker
+Select a color.
 ```lua
 Tab:AddColorpicker({
-    Name = "UI Accent",
-    Default = Color3.fromRGB(120, 140, 255),
-    Callback = function(Value)
-        print("Selected Color:", Value)
-    end
+	Name = "UI Color",
+	Default = Color3.fromRGB(255, 0, 0),
+	Callback = function(Value)
+		print(Value)
+	end	  
 })
+```
+
+### Textbox
+An input field for user string input.
+```lua
+Tab:AddTextbox({
+	Name = "Username",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		print(Value)
+	end	  
+})
+```
+
+### Keybind
+A keybind system with support for holding.
+```lua
+Tab:AddBind({
+	Name = "Kill All",
+	Default = Enum.KeyCode.K,
+	Hold = false,
+	Callback = function()
+		print("Bound key pressed!")
+	end    
+})
+```
+
+### Code Block
+Displays formatted code with a copy button.
+```lua
+Tab:AddCode("print('Hello Orion!')")
 ```
 
 ---
 
-## 📢 Notifications & Dialogues
+## 🔔 Utilities
 
-### 🔔 Notifications
-Temporary toast messages at the bottom-right corner.
+### Notifications
+Send a notification to the user.
 ```lua
 OrionLib:MakeNotification({
-    Name = "Success",
-    Content = "The exploit has been injected!",
-    Image = "check-circle",
-    Time = 5
+	Name = "Alert",
+	Content = "Something happened!",
+	Image = "rbxassetid://4483345998",
+	Time = 5
 })
 ```
 
-### 💬 Dialogues
-Modal popups that require user interaction.
+### Dialogs
+Show a confirmation dialog.
 ```lua
 OrionLib:MakeDialog({
-    Title = "Confirm Action",
-    Content = "Do you really want to reset your character?",
-    Buttons = {
-        {
-            Name = "Confirm",
-            Callback = function() print("Confirmed!") end
-        },
-        {
-            Name = "Cancel",
-            Callback = function() print("Cancelled.") end
-        }
-    }
+	Name = "Confirm",
+	Content = "Do you want to continue?",
+	Buttons = {
+		{
+			Name = "Yes",
+			Callback = function()
+				print("Confirmed!")
+			end
+		},
+		{
+			Name = "No",
+			Callback = function()
+				print("Cancelled!")
+			end
+		}
+	}
 })
 ```
 
----
-
-## 🛠️ Advanced Features
-
-### 🏘️ Paragraphs
-Informational text blocks with icons.
-```lua
-Tab:AddParagraph({
-    Title = "Warning",
-    Content = "Using this feature may result in a ban.",
-    Icon = "alert-triangle"
-})
-```
-
-### 📂 Config System
-Orion handles configuration saving automatically if `SaveConfig` is enabled. A hidden **"Configs"** tab appears in the library where users can Save, Load, and Delete presets.
-
-### 🖼️ Image Labels
-```lua
-Tab:AddImage({
-    Icon = "user", -- Lucide or Asset ID
-    Size = UDim2.new(0, 50, 0, 50)
-})
-```
-
-### 🏁 Initializing
-Must be called at the end of your script to finalize the UI.
+### Cleanup
+To properly initialize the library (autoloading configs):
 ```lua
 OrionLib:Init()
+```
+
+To destroy the UI:
+```lua
+OrionLib:Destroy()
 ```
